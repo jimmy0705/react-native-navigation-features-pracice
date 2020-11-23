@@ -10,22 +10,20 @@ import {
 } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
-import Accordion from './Accordion';
+import RadioButton from './RadioButton';
 
-
-
-const accordionData = [
+const options = [
   {
     key: '1',
-    img1:'./img/message.png',
+    text: 'Morning 9am-12pm',
   },
   {
     key: '2',
-    img1:'./img/phone.png',
+    text: 'Afternoon 12pm-4pm ',
   },
   {
     key: '3',
-    img1:'./img/mail.png',
+    text: 'Evening 4pm-8pm',
   },
 ];
 
@@ -46,7 +44,10 @@ function Home({navigation}) {
 }
 
 function ModalPopUp({navigation}) {
-
+  //const [emailSubmit, setEmailSubmit] = useState(false);
+  const [show, setShow] = useState(true);
+  const [call, setCall] = useState(true);
+  const [mail, setmMail] = useState(true);
 
   return (
     <View style={styles.mainContainer}>
@@ -71,9 +72,133 @@ function ModalPopUp({navigation}) {
             </Text>
           </View>
           {/* live chat accordion aprt goes from here */}
+          <View style={styles.collapsiblecontainer}>
+            <View style={styles.collapsibleHeaderTitle}>
+              <Image source={require('./img/message.png')} />
+              <Text style={styles.livechatText}>Live chat with us</Text>
+            </View>
+            <View style={styles.collapsibleHeaderTitle}>
+              <TouchableOpacity id="chat" onPress={() => setShow(!show)}>
+                {show ? (
+                  <Image
+                    style={styles.circle}
+                    source={require('./img/plus-circle.png')}
+                  />
+                ) : (
+                  <Image source={require('./img/minus-circle.png')} />
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+          {!show ? (
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.resetBtn}>
+                <Text
+                  style={styles.btnTitle}
+                  onPress={() => console.log('clicked live chat button')}>
+                  Start Live Chat
+                </Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View></View>
+          )}
 
-          {accordionData.map((accord,index)=><Accordion key={index} data={accord}/>)}
-            {/* <Accordion /> */}
+          <View style={{height: 1, backgroundColor: '#C4C4C4'}}></View>
+
+          {/* call us accordion part  */}
+          <View style={styles.collapsiblecontainer}>
+            <View style={styles.collapsibleHeaderTitle}>
+              <Image source={require('./img/phone.png')} />
+              <Text style={styles.livechatText}>Call us</Text>
+            </View>
+            <View style={styles.collapsibleHeaderTitle}>
+              <TouchableOpacity id="call" onPress={() => setCall(!call)}>
+                {call ? (
+                  <Image
+                    style={styles.circle}
+                    source={require('./img/plus-circle.png')}
+                  />
+                ) : (
+                  <Image source={require('./img/minus-circle.png')} />
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {!call ? (
+            <View style={styles.resetMsgcontainer}>
+              <Text style={styles.callText}>Monday - Friday 9am - 8pm ET</Text>
+              <Text style={styles.phoneNumText}>1-(877)-672-7348</Text>
+            </View>
+          ) : (
+            <View></View>
+          )}
+
+          <View style={{height: 1, backgroundColor: '#C4C4C4'}}></View>
+
+          {/* mail us accordion part  */}
+          <View style={styles.collapsiblecontainer}>
+            <View style={styles.collapsibleHeaderTitle}>
+              <Image source={require('./img/mail.png')} />
+              <Text style={styles.livechatText}>Request callback</Text>
+            </View>
+            <View style={styles.collapsibleHeaderTitle}>
+              <TouchableOpacity id="mail" onPress={() => setmMail(!mail)}>
+                {mail ? (
+                  <Image
+                    style={styles.circle}
+                    source={require('./img/plus-circle.png')}
+                  />
+                ) : (
+                  <Image source={require('./img/minus-circle.png')} />
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {!mail ? (
+            <View>
+              <View style={styles.resetMsgcontainer}>
+                <Text style={styles.mailTitleMsg}>
+                  We’ll get back to you as soon as we can.
+                </Text>
+              </View>
+              <View style={styles.inputContainer}>
+                <Text style={styles.textId}>Full Name</Text>
+                <TextInput style={styles.input} />
+              </View>
+
+              <View style={styles.inputContainer}>
+                <Text style={styles.textId}>Phone Number</Text>
+                <TextInput style={styles.input} />
+              </View>
+
+              <View style={styles.inputContainer}>
+                <Text style={styles.textId}>Preferred time of day</Text>
+              </View>
+
+              {/* testing radion buttons */}
+              <View>
+                <RadioButton options={options} />
+              </View>
+              {/* testing radio buttons */}
+
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.requestBtn}>
+                  <Text
+                    style={styles.btnTitle}
+                    onPress={() => console.log('mail button clicked')}>
+                    Request callback
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          ) : (
+            <View></View>
+          )}
+
+          {/* <View style={{height: 1, backgroundColor: '#C4C4C4'}}></View> */}
 
           {/* ============= */}
         </View>

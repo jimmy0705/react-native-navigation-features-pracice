@@ -1,53 +1,14 @@
 import React, {useState} from 'react';
 import {
   View,
-  Button,
   Text,
-  TextInput,
-  Image,
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
-import Accordion from './Accordion';
 
+import Accordion from '../Accordion';
 
-
-const accordionData = [
-  {
-    key: '1',
-    img1:'./img/message.png',
-  },
-  {
-    key: '2',
-    img1:'./img/phone.png',
-  },
-  {
-    key: '3',
-    img1:'./img/mail.png',
-  },
-];
-
-const Stack = createStackNavigator();
-
-//===get memebre id button for modal popup
-function Home({navigation}) {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text> :)</Text>
-      <Button
-        style={{borderRadius: 20}}
-        title="Get Member id"
-        onPress={() => navigation.navigate('modalPopUp')}
-      />
-    </View>
-  );
-}
-
-function ModalPopUp({navigation}) {
-
-
+export default function ModalPopUp({navigation}) {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.modalContent}>
@@ -71,59 +32,12 @@ function ModalPopUp({navigation}) {
             </Text>
           </View>
           {/* live chat accordion aprt goes from here */}
-
-          {accordionData.map((accord,index)=><Accordion key={index} data={accord}/>)}
-            {/* <Accordion /> */}
+          <Accordion />
 
           {/* ============= */}
         </View>
       </View>
     </View>
-  );
-}
-
-const modalOptions = {
-  headerShown: false,
-  cardStyle: {backgroundColor: 'transparent'},
-  cardOverlayEnabled: true,
-  cardStyleInterpolator: ({current: {progress}}) => ({
-    overlayStyle: {
-      opacity: progress.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, 0.6],
-        extrapolate: 'clamp',
-      }),
-    },
-  }),
-};
-
-const ForgotPasswordClickOption = {
-  headerShown: false,
-};
-
-const Navigation = () => {
-  return (
-    <Stack.Navigator headerMode="screen" mode="modal">
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={ForgotPasswordClickOption}
-      />
-
-      <Stack.Screen
-        name="modalPopUp"
-        component={ModalPopUp}
-        options={modalOptions}
-      />
-    </Stack.Navigator>
-  );
-};
-
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Navigation />
-    </NavigationContainer>
   );
 }
 
